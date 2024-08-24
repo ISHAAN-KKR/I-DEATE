@@ -71,9 +71,21 @@ const Page = () => {
   };
 
   return (
-    <section className="bg-black">
-      <div className="mx-auto max-w-screen-xl px-4 py-32 lg:flex lg:h-screen lg:items-center">
-        <div className="mx-auto max-w-4xl text-center">
+    <>
+   
+    <div class="bg-black py-6 sm:py-8 lg:py-12">
+  <div class="mx-auto max-w-screen-xl px-4 md:px-8">
+    <div class="grid gap-8 md:grid-cols-2 lg:gap-12">
+      <div>
+          <h1 className='text-white text-3xl font-bold mt-4 mb-4'>Which Qualities do you want in your Co-Founder ?</h1>
+        <div class="h-64 overflow-hidden rounded-lg bg-gray-100 shadow-lg md:h-auto">
+          <img src='/think.gif' loading="lazy" alt="Photo by Martin Sanchez" class="h-full w-full object-cover object-center" />
+        </div>
+      </div>
+
+      <section className="bg-black w-full h-screen">
+      <div className=" w-full px-4 py-32 lg:flex lg:h-screen lg:items-center">
+        <div className=" w-screen text-center">
           <motion.h1
            
           animate={{ y: 0 ,
@@ -84,7 +96,7 @@ const Page = () => {
            }}
           transition={{ ease: "linear",
             duration: .5, }}
-          className="text-xl font-extrabold text-lime-300 sm:text-5xl transition-all ">
+          className="text-lg font-extrabold text-lime-300 sm:text-5xl transition-all ">
             {questions[currentQuestionIndex]?.question || "Question not found"}
           </motion.h1>
           <div className="mt-8 flex flex-wrap justify-center gap-4">
@@ -97,6 +109,11 @@ const Page = () => {
         </div>
       </div>
     </section>
+    </div>
+  </div>
+</div>
+
+    </>
   );
 };
 

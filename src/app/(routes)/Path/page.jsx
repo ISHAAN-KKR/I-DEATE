@@ -6,13 +6,15 @@ const path = [
     name: "Founder",
     desc: "Turn your vision into reality by connecting with the perfect co-founder to build and grow your startup.",
     link: "/founder.gif",
-    still: "/stillfounder.png"
+    still: "/stillfounder.png",
+    direct:'/Founder/Profile'
   },
   {
     name: "Co-Founder",
     desc: "Join forces with a visionary founder, bringing your expertise to help create and scale innovative ideas.",
     link: "/cofounder.gif",
-    still: "/stillcofounder.png"
+    still: "/stillcofounder.png",
+    direct:'/Cofounder/Profile'
   },
 ];
 
@@ -48,7 +50,7 @@ const ImageCard = ({ item }) => {
 
   return (
     <a
-      href="/"
+      href={item.direct}
       className="group relative block bg-black"
       onMouseEnter={() => setSrc(item.link)} // Switch to GIF on hover
       onMouseLeave={() => setSrc(item.still)} // Switch back to still on hover out

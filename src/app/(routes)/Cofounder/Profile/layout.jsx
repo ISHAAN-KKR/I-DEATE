@@ -26,30 +26,24 @@ import { usePathname } from 'next/navigation';
 
 const drawerWidth = 280;
 const menu=[
-    {
-        name:'Profile',
-        icon:User,
-        link:'/Cofounder/Profile'
+  {
+      name:'Profile',
+      icon:User,
+      link:'/Cofounder/Profile'
 
-    },
-    {
-        name:'Ideas',
-        icon:Lightbulb ,
-        link:'/Cofounder/Profile/Ideas'
+  },
+  {
+      name:'Approaches',
+      icon:MessageSquareDot ,
+      link:'/Cofounder/Profile/Approach'
 
-    },
-    {
-        name:'Directs',
-        icon:MessageSquareDot ,
-        link:'/Cofounder/Profile/Approach'
+  },
+  {
+      name:'Contracts',
+      icon:ReceiptText,
+      link:'/Cofounder/Profile/Contracts'
 
-    },
-    {
-        name:'Contracts',
-        icon:ReceiptText,
-        link:'/Cofounder/Profile/Contracts'
-
-    },
+  },
 
 ]
 function Layout({props,children}) {

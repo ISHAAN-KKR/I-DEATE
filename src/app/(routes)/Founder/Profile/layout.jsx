@@ -22,30 +22,38 @@ import Content from './_components/Content';
 import Header from './_components/Header';
 import { MessageSquareDot, ReceiptText, User } from 'lucide-react';
 import Contract from './_components/Contract';
+import { Lightbulb } from 'lucide-react';
 import { usePathname } from 'next/navigation';
 
 const drawerWidth = 280;
 const menu=[
-    {
-        name:'Profile',
-        icon:User,
-        link:'/Founder/Profile'
+  {
+      name:'Profile',
+      icon:User,
+      link:'/Founder/Profile'
 
-    },
-    {
-        name:'Approaches',
-        icon:MessageSquareDot ,
-        link:'/Founder/Profile/Approach'
+  },
+  {
+      name:'Ideas',
+      icon:Lightbulb ,
+      link:'/Founder/Profile/Ideas'
 
-    },
-    {
-        name:'Contracts',
-        icon:ReceiptText,
-        link:'/Founder/Profile/Contracts'
+  },
+  {
+      name:'Directs',
+      icon:MessageSquareDot ,
+      link:'/Founder/Profile/Approach'
 
-    },
+  },
+  {
+      name:'Contracts',
+      icon:ReceiptText,
+      link:'/Founder/Profile/Contracts'
+
+  },
 
 ]
+
 function Layout({props,children}) {
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [isClosing, setIsClosing] = React.useState(false);

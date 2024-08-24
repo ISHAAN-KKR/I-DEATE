@@ -55,7 +55,8 @@ export const AuroraHero = () => {
         <p className="my-6 max-w-xl text-center -mt-20 text-base leading-relaxed md:text-lg md:leading-relaxed">
         Solo and Sufficient? Or Ready to Conquer the World Together?
         </p>
-        <motion.button
+        <motion.a
+        href='/sign-in'
           style={{
             border,
             boxShadow,
@@ -69,7 +70,7 @@ export const AuroraHero = () => {
           className="group relative flex w-fit items-center gap-1.5 rounded-full bg-gray-950/10 px-4 py-2 text-gray-50 transition-colors hover:bg-gray-950/50"
         >
           Start Now
-        </motion.button>
+        </motion.a>
       </div>
 
       <div className="absolute inset-0 z-0">

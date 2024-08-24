@@ -1,6 +1,6 @@
 import React from 'react'
 import { CircleDotDashed, Newspaper } from 'lucide-react'
-import { Button } from '@/components/ui/button'
+import { Button } from '../../../../../components/ui/button'
 const ContractList = ({item}) => {
   return (
     <>

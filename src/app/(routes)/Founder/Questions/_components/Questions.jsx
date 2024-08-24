@@ -1,4 +1,5 @@
 "use client";
+import { useState } from "react";
 import * as React from "react";
 import { useTheme } from "@mui/material/styles";
 import Box from "@mui/material/Box";
@@ -7,7 +8,8 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import Chip from "@mui/material/Chip";
-import { Button } from "@/components/ui/button";
+import { Button } from './../../../../../components/ui/button';
+import Load from './Loader/Load'
 import { InputLabel } from "@mui/material";
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -49,7 +51,7 @@ export default function MultipleSelectChip({ params, onNext, isLast }) {
 
   return (
     <>
-   
+ 
     <FormControl className="bg-white" sx={{ m: 1, width: 500 }}>
       <InputLabel className="">Choose</InputLabel>
       <Select
@@ -81,7 +83,7 @@ export default function MultipleSelectChip({ params, onNext, isLast }) {
 {
     isLast?
     <>
-    <a href='/Founder/Profile'>
+    <a href='/Founder/Profile/Ideas'>
 
    
     <Button variant="outline" sx={{ mt: 2 }} onClick={handleClick}>

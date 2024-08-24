@@ -1,8 +1,9 @@
 import React from 'react'
 import Image from 'next/image'
-import { Button } from '@/components/ui/button'
+import { Button } from './../../../../../components/ui/button'
 import { CirclePlus } from 'lucide-react'
 import ConnectBuuton from './ConnectButton/ConnectBuuton'
+import { UserButton } from '@clerk/nextjs'
 function Header() {
   return (
     <>    <div className='flex justify-end w-full gap-2 items-center p-4'>
@@ -13,7 +14,10 @@ function Header() {
     </div>
     <div>
         {/* UserIcon */}
-      <Image src='/pfp.jpg' alt='profile' className='border b-2 rounded-full h-12 w-12' height={500} width={500}/>
+       
+
+      <UserButton />
+ 
 
 
      

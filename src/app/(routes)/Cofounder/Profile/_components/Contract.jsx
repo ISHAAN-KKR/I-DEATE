@@ -1,5 +1,5 @@
-import { Badge } from '@/components/ui/badge'
-import { Button } from '@/components/ui/button'
+import { Badge } from '../../../../../components/ui/badge'
+import { Button } from '../../../../../components/ui/button'
 import React from 'react'
 import ContractList from './ContractList'
 const contracts=[
