@@ -1,7 +1,9 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useUser } from "@clerk/nextjs";
+import { db } from "../../../../utils/db";
 import { UsersTable } from "../../../../utils/schema";
+import { useRouter } from "next/navigation";
 
 const path = [
   {
@@ -22,6 +24,40 @@ const path = [
 
 const Page = () => {
   const { user } = useUser();
+  const router = useRouter();
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const checkUserRole = async () => {
+      try {
+        // Query the database to see if the user already exists in the UsersTable
+        const existingUser = await db.select().from(UsersTable).where({ id: user?.id }).first();
+
+        if (existingUser) {
+          // Redirect based on the user's role
+          if (existingUser.id_type === "founder") {
+            router.push("/Founder/Profile");
+          } else if (existingUser.id_type === "cofounder") {
+            router.push("/Cofounder/Profile");
+          }
+        } else {
+          // If the user does not exist, keep them on the current page
+          setLoading(false);
+        }
+      } catch (error) {
+        console.error("Error checking user role: ", error);
+        setLoading(false);
+      }
+    };
+
+    if (user) {
+      checkUserRole();
+    }
+  }, [user, router]);
+
+  if (loading) {
+    return <div>Loading...</div>; // Show a loading indicator while the user role is being checked
+  }
 
   const sendDataFo = async () => {
     try {
@@ -31,7 +67,6 @@ const Page = () => {
       });
 
       console.log("Inserted ID: ", resp);
-      // handle success case if needed
     } catch (error) {
       console.log("Error: ", error);
     }
@@ -45,7 +80,6 @@ const Page = () => {
       });
 
       console.log("Inserted ID: ", resp);
-      // handle success case if needed
     } catch (error) {
       console.log("Error: ", error);
     }
@@ -83,10 +117,17 @@ const Page = () => {
 
 const ImageCard = ({ item, sendData }) => {
   const [src, setSrc] = useState(item.still);
+  const router = useRouter();
+
+  const handleClick = async (event) => {
+    event.preventDefault();
+    await sendData();
+    router.push(item.direct);
+  };
 
   return (
     <a
-      onClick={sendData}
+      onClick={handleClick}
       href={item.direct}
       className="group relative block bg-black"
       onMouseEnter={() => setSrc(item.link)}

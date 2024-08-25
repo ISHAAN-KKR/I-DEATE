@@ -3,7 +3,7 @@ import { pgTable, serial, text, varchar, integer, json, array } from "drizzle-or
 // Table definitions
 
 export const CoFounder = pgTable('cofounder', {
-    id: integer('id').primaryKey(),
+    id: text('id').primaryKey(),
     name: text('name').notNull(),
     picture: text('picture').notNull(),
     location: text('location').notNull(),
@@ -16,8 +16,9 @@ export const CoFounder = pgTable('cofounder', {
 });
 
 export const Founder = pgTable('founder', {
-    id: integer('id').primaryKey(),
+    id: text('id').primaryKey(),
     name: text('name').notNull(),
+    bio: text('bio'),
     picture: text('picture').notNull(),
     location: text('location').notNull(),
     yoe: integer('yoe'),
@@ -27,7 +28,7 @@ export const Founder = pgTable('founder', {
 });
 
 export const Skills = pgTable('skills', {
-    cofounder_id: integer('cofounder_id').primaryKey(),
+    cofounder_id: text('cofounder_id').primaryKey(),
     technical_skill: text('technical_skill').notNull(), 
     area_of_experience: text('area_of_experience').notNull(),
     leadership_style: text('leadership_style').notNull(), 
@@ -45,20 +46,20 @@ export const Ideas = pgTable('ideas', {
     idea_id: integer('idea_id').primaryKey(),
     idea_title: text('idea_title').notNull(),
     idea_desc: text('idea_desc').notNull(),
-    founder_id: integer('founder_id').references(() => Founder.id, { onDelete: "SET NULL" }),
+    founder_id: text('founder_id').references(() => Founder.id, { onDelete: "SET NULL" }),
     pref_yoe: integer('pref_yoe'),  // Consistent snake_case for 'PrefYOE'
     pref_loc: text('pref_loc'),     // Consistent snake_case for 'PrefLoc'
-    matched_ids: integer('matched_ids').array(), // Using array to define an integer array column
+    matched_ids: text('matched_ids').array(), // Using array to define an integer array column
     industry: text('industry')
 });
 
 export const UserList = pgTable('userideas', {
-    founder_id: integer('founder_id').references(() => Founder.id, { onDelete: "SET NULL" }),
-    cofounder_id: integer('cofounder_id').references(() => CoFounder.id, { onDelete: "SET NULL" })
+    founder_id: text('founder_id').references(() => Founder.id, { onDelete: "SET NULL" }),
+    cofounder_id: text('cofounder_id').references(() => CoFounder.id, { onDelete: "SET NULL" })
 });
 
 export const UsersTable = pgTable('userstable', {
-    id: integer('id').primaryKey(),
+    id: text('id').primaryKey(),
     id_type: text('id_type').notNull()
 });
 
