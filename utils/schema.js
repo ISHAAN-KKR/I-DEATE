@@ -43,7 +43,7 @@ export const Skills = pgTable('skills', {
 });
 
 export const Ideas = pgTable('ideas', {
-    idea_id: integer('idea_id').primaryKey(),
+    idea_id: text('idea_id').primaryKey(),
     idea_title: text('idea_title').notNull(),
     idea_desc: text('idea_desc').notNull(),
     founder_id: text('founder_id').references(() => Founder.id, { onDelete: "SET NULL" }),

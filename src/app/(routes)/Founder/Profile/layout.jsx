@@ -84,7 +84,7 @@ function Layout({props,children}) {
       <Divider />
       <List className='my-4'>
         {menu.map((text, index) => (
-            <a href={text.link}>
+            <a key={index} href={text.link}>
 
             
           <ListItem className={` ${text.link==path?"bg-gray-100":""}  my-4 rounded-lg `} key={index} disablePadding>
