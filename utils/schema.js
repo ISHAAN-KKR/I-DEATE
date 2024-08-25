@@ -57,6 +57,11 @@ export const UserList = pgTable('userideas', {
     cofounder_id: integer('cofounder_id').references(() => CoFounder.id, { onDelete: "SET NULL" })
 });
 
+export const UsersTable = pgTable('userstable', {
+    id: integer('id').primaryKey(),
+    id_type: text('id_type').notNull()
+});
+
 export const Qualities = pgTable('qualities', {
     quality_id: integer('quality_id').primaryKey(),
     technical_skill: text('technical_skill').notNull(), 
