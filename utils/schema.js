@@ -64,7 +64,7 @@ export const UsersTable = pgTable('userstable', {
 });
 
 export const Qualities = pgTable('qualities', {
-    quality_id: integer('quality_id').primaryKey(),
+    quality_id: text('quality_id').primaryKey(),
     technical_skill: text('technical_skill').notNull(), 
     area_of_experience: text('area_of_experience').notNull(),
     leadership_style: text('leadership_style').notNull(), 

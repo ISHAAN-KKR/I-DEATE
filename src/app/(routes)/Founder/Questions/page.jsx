@@ -1,7 +1,8 @@
-"use client"
+"use client";
 import React, { useState } from 'react';
 import MultipleSelectChip from './_components/Questions';
 import { motion } from 'framer-motion';
+
 const questions = [
     {
       "question": "Which technical skill is most important in a co-founder?",
@@ -72,47 +73,40 @@ const Page = () => {
 
   return (
     <>
-   
-    <div class="bg-black py-6 sm:py-8 lg:py-12">
-  <div class="mx-auto max-w-screen-xl px-4 md:px-8">
-    <div class="grid gap-8 md:grid-cols-2 lg:gap-12">
-      <div>
-          <h1 className='text-white text-3xl font-bold mt-4 mb-4'>Which Qualities do you want in your Co-Founder ?</h1>
-        <div class="h-64 overflow-hidden rounded-lg bg-gray-100 shadow-lg md:h-auto">
-          <img src='/think.gif' loading="lazy" alt="Photo by Martin Sanchez" class="h-full w-full object-cover object-center" />
-        </div>
-      </div>
+      <div className="bg-black py-6 sm:py-8 lg:py-12">
+        <div className="mx-auto max-w-screen-xl px-4 md:px-8">
+          <div className="grid gap-8 md:grid-cols-2 lg:gap-12">
+            <div>
+              <h1 className='text-white text-3xl font-bold mt-4 mb-4'>Which Qualities do you want in your Co-Founder ?</h1>
+              <div className="h-64 overflow-hidden rounded-lg bg-gray-100 shadow-lg md:h-auto">
+                <img src='/think.gif' loading="lazy" alt="Photo by Martin Sanchez" className="h-full w-full object-cover object-center" />
+              </div>
+            </div>
 
-      <section className="bg-black w-full h-screen">
-      <div className=" w-full px-4 py-32 lg:flex lg:h-screen lg:items-center">
-        <div className=" w-screen text-center">
-          <motion.h1
-           
-          animate={{ y: 0 ,
-            opacity: 1
-          }}
-          initial={{ y: -100,
-            opacity: 0
-           }}
-          transition={{ ease: "linear",
-            duration: .5, }}
-          className="text-lg font-extrabold text-lime-300 sm:text-5xl transition-all ">
-            {questions[currentQuestionIndex]?.question || "Question not found"}
-          </motion.h1>
-          <div className="mt-8 flex flex-wrap justify-center gap-4">
-            <MultipleSelectChip
-              params={questions[currentQuestionIndex]}
-              onNext={handleNext}
-              isLast={currentQuestionIndex === questions.length - 1}
-            />
+            <section className="bg-black w-full h-screen">
+              <div className="w-full px-4 py-32 lg:flex lg:h-screen lg:items-center">
+                <div className="w-screen text-center">
+                  <motion.h1
+                    animate={{ y: 0, opacity: 1 }}
+                    initial={{ y: -100, opacity: 0 }}
+                    transition={{ ease: "linear", duration: .5 }}
+                    className="text-lg font-extrabold text-lime-300 sm:text-5xl transition-all"
+                  >
+                    {questions[currentQuestionIndex]?.question || "Question not found"}
+                  </motion.h1>
+                  <div className="mt-8 flex flex-wrap justify-center gap-4">
+                    <MultipleSelectChip
+                      params={questions[currentQuestionIndex]}
+                      onNext={handleNext}
+                      isLast={currentQuestionIndex === questions.length - 1}
+                    />
+                  </div>
+                </div>
+              </div>
+            </section>
           </div>
         </div>
       </div>
-    </section>
-    </div>
-  </div>
-</div>
-
     </>
   );
 };

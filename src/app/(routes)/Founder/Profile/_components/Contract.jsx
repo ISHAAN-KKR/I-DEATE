@@ -40,6 +40,9 @@ function Contract() {
         <Badge variant={"outline"} className='px-6 py-4 border-red-300 text-red-600 
         hover:bg-red-300 hover:text-red-900 
         '>Pending</Badge>
+        <Badge variant={"outline"} className='px-6 py-4 border-gray-300 text-gray-900 
+        hover:bg-gray-400 hover:text-gray-100 
+        '>Rejected</Badge>
 
     </div>
     <div>
