@@ -6,6 +6,7 @@ import { Ideas } from '../../../../../../../utils/schema';
 import { eq } from 'drizzle-orm';
 import { db } from '../../../../../../../utils/db';
 import { Lightbulb, MapPin, Timer } from 'lucide-react';
+import { Button } from '../../../../../../components/ui/button';
 
 const SkeletonLoader = () => (
   <article className="rounded-xl bg-white p-4 ring ring-indigo-50 sm:p-6 lg:p-8 animate-pulse">
@@ -126,7 +127,10 @@ const Page = ({ params }) => {
       {ideas?.matched_ids ? (
         <Example />
       ) : (
-        <p>No such People Found</p>
+        <a href='/Founder/Questions'>
+
+          <Button> Find your Match</Button>
+        </a>
       )}
     </>
   );

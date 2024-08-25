@@ -1,7 +1,6 @@
 "use client"
 import * as React from 'react';
 import Image from 'next/image';
-import PropTypes from 'prop-types';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -17,11 +16,8 @@ import ListItemText from '@mui/material/ListItemText';
 // import MailIcon from '@mui/icons-material/Mail';
 // import MenuIcon from '@mui/icons-material/Menu';
 import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import Content from './_components/Content';
 import Header from './_components/Header';
 import { MessageSquareDot, ReceiptText, User,Lightbulb } from 'lucide-react';
-import Contract from './_components/Contract';
 import { usePathname } from 'next/navigation';
 
 const drawerWidth = 280;
@@ -69,12 +65,12 @@ function Layout({props,children}) {
   const drawer = (
     <div className='bg-black h-screen'>
       <div>
-        <Image src='/Logo/logo-trans.png' width={400} height={400} className='w-40 mx-auto' />
+        <Image src='/Logo/logo-trans.png' width={400} height={400} className='w-40 mx-auto' alt="logo" />
       </div>
       <Divider />
       <List className='my-4'>
         {menu.map((text, index) => (
-            <a href={text.link}>
+            <a key={index} href={text.link}>
 
             
           <ListItem className={` ${text.link==path?"bg-gray-100":""}  my-4 rounded-lg `} key={index} disablePadding>

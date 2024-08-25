@@ -1,56 +1,46 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { useUser } from "@clerk/nextjs";
+import { MapPin, LifeBuoy } from "lucide-react";
 import { Input } from "../../../../../components/ui/input";
 import { db } from "../../../../../../utils/db";
-import { CoFounder } from "../../../../../../utils/schema"; // Adjust the schema import as necessary
+import { CoFounder } from "../../../../../../utils/schema";
 import { eq } from "drizzle-orm";
 import { Button } from "../../../../../components/ui/button";
-import { MapPin, LifeBuoy, UserPlus, BarChart2 } from "lucide-react";
 
-function Content() {
+function CoFounderPage() {
   const { user } = useUser();
-  const [cofounderDetails, setCofounderDetails] = useState(null);
-  const [isEditing, setIsEditing] = useState(false);
+  const [coFounderDetails, setCoFounderDetails] = useState(null);
+  const [isEditing, setIsEditing] = useState(true); // Start in editing mode if no details
   const [formValues, setFormValues] = useState({
-    name: "",
-    picture: "",
+    bio: "",
     location: "",
     yoe: 0,
-    bio: "",
-    connects: 0,
-    analytics: {},
-    sentence: "",
-    room: {},
   });
 
   useEffect(() => {
-    const fetchCofounderDetails = async () => {
+    const fetchCoFounderDetails = async () => {
       if (user) {
         try {
-          const cofounderDetails = await db
-            .select()
-            .from(CoFounder)
-            .where(eq(CoFounder.id, user.id));
-          setCofounderDetails(cofounderDetails[0]);
-          setFormValues({
-            name: cofounderDetails[0]?.name || "",
-            picture: cofounderDetails[0]?.picture || "",
-            location: cofounderDetails[0]?.location || "",
-            yoe: cofounderDetails[0]?.yoe || 0,
-            bio: cofounderDetails[0]?.bio || "",
-            connects: cofounderDetails[0]?.connects || 0,
-            analytics: cofounderDetails[0]?.analytics || {},
-            sentence: cofounderDetails[0]?.sentence || "",
-            room: cofounderDetails[0]?.room || {},
-          });
+          const coFounderDetails = await db.select().from(CoFounder).where(eq(CoFounder.id, user.id));
+          if (coFounderDetails.length > 0) {
+            setCoFounderDetails(coFounderDetails[0]);
+            setFormValues({
+              bio: coFounderDetails[0]?.bio || "",
+              location: coFounderDetails[0]?.location || " your location",
+              yoe: coFounderDetails[0]?.yoe || 0,
+            });
+            setIsEditing(false); // If details exist, start in non-editing mode
+          } else {
+            setIsEditing(true); // Start in editing mode if no details
+          }
         } catch (error) {
           console.error("Error fetching co-founder details:", error);
         }
       }
     };
 
-    fetchCofounderDetails();
+    fetchCoFounderDetails();
   }, [user]);
 
   const handleInputChange = (e) => {
@@ -68,35 +58,51 @@ function Content() {
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     try {
-      await db.update(CoFounder).set(formValues).where(eq(CoFounder.id, user.id));
-      setCofounderDetails((prevDetails) => ({
-        ...prevDetails,
-        ...formValues,
-      }));
+      // Upsert logic: Insert new record if none exists, or update existing
+      if (coFounderDetails) {
+        await db.update(CoFounder).set(formValues).where(eq(CoFounder.id, user.id));
+      } else {
+        await db.insert(CoFounder).values({ id: user.id, ...formValues });
+      }
+      setCoFounderDetails(formValues);
       setIsEditing(false);
     } catch (error) {
       console.error("Error updating co-founder details:", error);
     }
   };
 
-  if (!cofounderDetails) {
-    return <div className="h-screen w-full flex justify-center items-center">Loading...</div>;
+  const renderSkeleton = () => (
+    <div className="animate-pulse flex flex-col items-center">
+      <div className="w-32 h-32 rounded-full bg-gray-300"></div>
+      <div className="w-48 h-6 mt-4 bg-gray-300 rounded"></div>
+      <div className="w-64 h-4 mt-2 bg-gray-300 rounded"></div>
+      <div className="w-64 h-4 mt-2 bg-gray-300 rounded"></div>
+      <div className="w-48 h-4 mt-2 bg-gray-300 rounded"></div>
+    </div>
+  );
+
+  if (!coFounderDetails && !isEditing) {
+    return (
+      <div className="h-screen w-full flex justify-center items-center">
+        {renderSkeleton()}
+      </div>
+    );
   }
 
   return (
-    <div className="h-screen w-full flex justify-center dark:bg-gray-900">
-      <div className="relative w-full max-w-4xl my-8 flex flex-col items-start space-y-4 sm:flex-row sm:space-y-0 sm:space-x-6 px-4 py-8 border-2 border-dashed border-gray-400 dark:border-gray-400 shadow-lg rounded-lg">
-        <span className="absolute text-xs font-medium top-0 left-0 rounded-br-lg rounded-tl-lg px-2 py-1 bg-primary-100 dark:bg-gray-900 dark:text-gray-300 border-gray-400 dark:border-gray-400 border-b-2 border-r-2 border-dashed ">
+    <div className="w-full flex justify-center dark:bg-gray-900">
+      <div className="relative w-full max-w-4xl my-8 md:my-4 flex flex-col items-start space-y-4 sm:flex-row sm:space-y-0 sm:space-x-6 px-4 py-8 border-2 border-dashed border-gray-400 dark:border-gray-400 shadow-lg rounded-lg">
+        <span className="absolute text-xs font-medium top-0 left-0 rounded-br-lg rounded-tl-lg px-2 py-1 bg-primary-100 dark:bg-gray-900 dark:text-gray-300 border-gray-400 dark:border-gray-400 border-b-2 border-r-2 border-dashed">
           Co-Founder
         </span>
 
         <div className="w-full flex justify-center sm:justify-start sm:w-auto">
-          <img className="rounded-full w-32" src={formValues.picture} alt="Co-founder profile" />
+          <img className="rounded-full w-32" src={user?.imageUrl} alt="Co-Founder profile" />
         </div>
 
         <div className="w-full sm:w-auto flex flex-col sm:items-start">
           <p className="font-display mb-2 text-2xl font-semibold dark:text-gray-200">
-            {formValues.name}
+            {user?.fullName}
           </p>
 
           {isEditing ? (
@@ -132,35 +138,14 @@ function Content() {
                 </h1>
               </div>
 
-              <div className="flex gap-4">
-                <div className="flex gap-4">
-                  <UserPlus className="my-1 text-blue-400" />
-                  <Input
-                    name="connects"
-                    type="number"
-                    placeholder="Connections"
-                    value={formValues.connects}
-                    onChange={handleInputChange}
-                  />
-                </div>
-                <h1 className="w-[30rem] py-1 flex gap-3">
-                  <BarChart2 className="text-yellow-500" />
-                  <Input
-                    name="analytics"
-                    type="text"
-                    placeholder="Analytics"
-                    value={JSON.stringify(formValues.analytics)}
-                    onChange={handleInputChange}
-                  />
-                </h1>
-              </div>
-
-              <Button className='mt-12' type="submit">Save</Button>
+              <Button className="mt-12" type="submit">
+                Save
+              </Button>
             </form>
           ) : (
             <>
               <div className="mb-4 md:text-lg text-gray-400">
-                <p>{formValues.bio || "No bio available."}</p>
+                <p>{coFounderDetails?.bio || "No bio available."}</p>
               </div>
 
               <div>
@@ -171,20 +156,40 @@ function Content() {
                   </div>
                   <h1 className="w-[30rem] py-1 flex gap-3">
                     <LifeBuoy className="text-green-500" />
-                    {formValues.yoe} years of Experience
+                    {coFounderDetails?.yoe} years of Experience
                   </h1>
                 </div>
               </div>
             </>
           )}
-
-          <Button className='mt-12' onClick={handleEditToggle}>
+          <Button className="mt-12" variant="outline" onClick={handleEditToggle}>
             {isEditing ? "Cancel" : "Edit Profile"}
           </Button>
+          <div className="h-[20vh] my-7 w-[40vw] flex gap-4 ml-32">
+            <div className="bg-white py-6 sm:py-8 lg:py-12">
+              <div className="mx-auto max-w-screen-lg px-4 md:px-8">
+                <div className="grid-cols-2 gap-6 rounded-lg bg-black flex justify-between p-6 md:grid-cols-4 md:gap-8 md:p-8">
+                  <div className="flex flex-col items-center">
+                    <div className="text-xl font-bold text-lime-400 sm:text-2xl md:text-3xl">
+                      {coFounderDetails?.connects || 0}+
+                    </div>
+                    <div className="text-sm text-indigo-50 sm:text-base">Connects</div>
+                  </div>
+
+                  <div className="flex flex-col items-center">
+                    <div className="text-xl font-bold text-lime-400 sm:text-2xl md:text-3xl">
+                      {coFounderDetails?.analytics?.contracts || 0}+
+                    </div>
+                    <div className="text-sm text-indigo-50 sm:text-base">Contracts</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   );
 }
 
-export default Content;
+export default CoFounderPage;

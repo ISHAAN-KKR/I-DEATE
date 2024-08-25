@@ -79,7 +79,7 @@ function Layout({props,children}) {
 
     <div className='bg-black h-screen'>
       <div>
-        <Image src='/Logo/logo-trans.png' width={400} height={400} className='w-40 mx-auto' />
+        <Image src='/Logo/logo-trans.png' width={400} height={400} className='w-40 mx-auto' alt='logo' />
       </div>
       <Divider />
       <List className='my-4'>

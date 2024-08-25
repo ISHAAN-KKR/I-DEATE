@@ -5,6 +5,6 @@ export default {
   schema: "./utils/schema.js",
   out: "./drizzle",
   dbCredentials: {
-    url: 'postgresql://knowidea_owner:mdA6Kbjzyuk8@ep-square-glitter-a1gbbiez.ap-southeast-1.aws.neon.tech/knowidea?sslmode=require'
+    url: 'postgresql://knowidea_owner:rdS4aszxJuA2@ep-square-glitter-a1gbbiez-pooler.ap-southeast-1.aws.neon.tech/knowidea?sslmode=require'
   }
 };
