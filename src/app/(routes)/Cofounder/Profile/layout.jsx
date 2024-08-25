@@ -42,7 +42,7 @@ const menu=[
   },
 
 ]
-function Layout({props,children}) {
+function Layout({children}) {
   const path=usePathname();
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [isClosing, setIsClosing] = React.useState(false);
